@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 
-const ColorList = ({ colorList }) => {
+const ColorList = ({ colorList, handleClickClearColors }) => {
   const handleCopyColor = (color) => {
     navigator.clipboard.writeText(color);
 
@@ -15,27 +15,38 @@ const ColorList = ({ colorList }) => {
   };
 
   return (
-    <div className="list-group text-center">
-      {colorList.length ? (
-        colorList.map((color, i) => (
-          <button
-            key={i}
-            type="button"
-            className="list-group-item list-group-item-action"
-            aria-current="true"
-            title="Copiar"
-            style={{ background: color, fontWeight: "bolder" }}
-            onClick={() => handleCopyColor(color)}
-          >
-            {color}
-          </button>
-        ))
-      ) : (
-        <div className="alert alert-danger" role="alert">
-          <b>Sin colores guardados</b>
-        </div>
+    <>
+      {colorList.length > 0 && (
+        <button
+          onClick={handleClickClearColors}
+          className="btn btn-danger my-4 w-100"
+        >
+          Clear list
+        </button>
       )}
-    </div>
+
+      <div className="list-group text-center">
+        {colorList.length ? (
+          colorList.map((color, i) => (
+            <button
+              key={i}
+              type="button"
+              className="list-group-item list-group-item-action"
+              aria-current="true"
+              title="Copiar"
+              style={{ background: color, fontWeight: "bolder" }}
+              onClick={() => handleCopyColor(color)}
+            >
+              {color}
+            </button>
+          ))
+        ) : (
+          <div className="alert alert-danger" role="alert">
+            <b>Sin colores guardados</b>
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 
